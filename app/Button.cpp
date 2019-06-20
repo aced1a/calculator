@@ -1,5 +1,6 @@
 #include "Button.h"
 
+Screen screen;
 
 Button::Button()
 	:x{ 0 }, y{ 0 }, index{ 0 }, active{ 0 }, element{  }
@@ -13,7 +14,7 @@ Button::Button(int xx, int yy, char i, Element e, void(*f)(short))
 	buttonFunction = f;
 }
 
-short Button::getIndex()
+char Button::getIndex()
 {
 	return index;
 }
@@ -51,4 +52,5 @@ void Screen::screenRender()
 	{
 		mButtons[i].mTexture.render(mButtons[i].getX(), mButtons[i].getY());
 	}
+	resultOutput.render(0, 0);
 }

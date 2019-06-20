@@ -5,12 +5,13 @@ class Button
 {
 	int x, y;		
 	char index;	
+	//Uint16 index;
 	bool active;	
 	Element element;	
 public:
 	Button();
 	Button(int xx, int yy, char i, Element e, void(*f)(short));
-	short getIndex();
+	char getIndex();
 	void setIndex(short i);
 	int getX();
 	int getY();
@@ -26,8 +27,13 @@ struct Screen
 {
 public:
 	Texture mBackground;
+	Texture resultOutput;
 	vector<Button> mButtons;
 	void screenRender();
 };
 
-Screen screen;
+extern Screen screen;
+
+
+void init_SDL();
+void close_SDL();

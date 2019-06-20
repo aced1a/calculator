@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <vector>
 #include <string>
@@ -20,9 +21,10 @@ extern TTF_Font* gFont_big;
 extern const string fontPath;
 
 enum class Element { background=0,resultOutput,button,COUNT };
+enum class Images{pi=0,prefixCharacter,backspace,COUNT};
 
 extern pair<short,short> elementsSizes[short(Element::COUNT)];
-//extern string imgPaths[short(Element::COUNT)];
+extern string imgPaths[short(Images::COUNT)];
 
 
 class Texture

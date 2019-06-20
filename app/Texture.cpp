@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-SDL_Renderer* gRender=nullptr;
+SDL_Renderer* gRenderer=nullptr;
 SDL_Window* gWindow=nullptr;
 
 TTF_Font* gFont_small = nullptr;
@@ -10,7 +10,7 @@ SDL_Color gFontColor = {0xFF,0xFF,0xFF};
 const string fontPath = "C:/SDL/projects/engDataBase/engDataBase/Fonts/fixedsys.ttf";;
 
 pair<short, short> elementsSizes[short(Element::COUNT)];
-//string imgPaths[short(Element::COUNT)];
+string imgPaths[short(Images::COUNT)];
 
 
 void error(string str)
