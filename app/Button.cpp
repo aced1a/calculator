@@ -8,7 +8,7 @@ Button::Button()
 	buttonFunction = nullptr;
 }
 
-Button::Button(int xx, int yy, char i, Element e, void(*f)(short))
+Button::Button(int xx, int yy, char i, Element e, void(*f)(char))
 	: x{ xx }, y{ yy }, index{ i }, element{ e }
 {
 	buttonFunction = f;
@@ -53,4 +53,20 @@ void Screen::screenRender()
 		mButtons[i].mTexture.render(mButtons[i].getX(), mButtons[i].getY());
 	}
 	resultOutput.render(0, 0);
+}
+
+void buttonFunct(char index)
+{
+	if (index == backspace)
+		backspaceFunct();
+	else if (index == clear)
+		clearFunct();
+	else if (index == pi)
+		strExpression += "3.14";
+	else if (index == prefSign)
+		strExpression += '-';
+	else
+		strExpression += index;
+	loadMedia_resultOutput();
+	draw();
 }

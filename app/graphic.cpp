@@ -22,6 +22,26 @@ void loadMedia_background()
 
 void loadMedia_resultOutput()
 {
+	string first = strExpression, second = tol(expression());
+	short offset = MAINWINDOW_WIDTH - (strExpression.size() * 10)-20,offset2=MAINWINDOW_WIDTH - 20;
+	if (offset < 20)
+	{
+		//offset = 20;
+		while (offset < 20)
+		{
+			offset += 10;
+			first.erase(first.begin());
+		}
+		offset -= second.size() * 10;
+	}
 	screen.resultOutput.createSurface(Element::resultOutput);
-	//...
+	screen.mBackground.loadFromText(first, gFont_small, gFontColor, offset, 30);
+	screen.mBackground.loadFromText(second, gFont_small, gFontColor, 20, 20);
+}
+
+void draw()
+{
+	screen.screenRender();
+	SDL_RenderPresent(gRenderer);
+	SDL_RenderClear(gRenderer);
 }

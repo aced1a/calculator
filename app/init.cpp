@@ -60,9 +60,9 @@ void init_elementsSizes()
 
 void init_imgPaths()
 {
-	imgPaths[short(Images::pi)] = " ";
+	imgPaths[short(Images::piImg)] = " ";
 	imgPaths[short(Images::prefixCharacter)] = "";
-	imgPaths[short(Images::backspace)] = "";
+	imgPaths[short(Images::backspaceImg)] = "";
 }
 
 void init_screen()
@@ -70,8 +70,8 @@ void init_screen()
 	short w = elementsSizes[short(Element::button)].first;
 	short h = elementsSizes[short(Element::button)].second;
 	short size = 24;
-	char symbols[] = { '%','√','^',char(0),'C',char(1),'!','/','7','8','9','*','4','5','6','-','1','2','3','+',char(2),'0','.','=' };//'π'
+	char symbols[] = { '%','√','^',char(0),'c',char(1),'!','/','7','8','9','*','4','5','6','-','1','2','3','+',char(2),'0','.','=' };//'π'
 	for (short i = 0; i < size; i++) {
-		screen.mButtons.push_back(Button{ w*(i / 4) + 2,h*(i % 4) + 2,symbols[i],Element::button,nullptr });
+		screen.mButtons.push_back(Button{ w*(i / 4) + 2,h*(i % 4) + 2,symbols[i],Element::button,buttonFunct });
 	}
 }

@@ -10,12 +10,12 @@ class Button
 	Element element;	
 public:
 	Button();
-	Button(int xx, int yy, char i, Element e, void(*f)(short));
+	Button(int xx, int yy, char i, Element e, void(*f)(char));
 	char getIndex();
 	void setIndex(short i);
 	int getX();
 	int getY();
-	void(*buttonFunction)(short);	
+	void(*buttonFunction)(char);	
 	Element getElement();	
 	void chgElement(Element e);
 
@@ -33,7 +33,9 @@ public:
 };
 
 extern Screen screen;
-
+void loadMedia_resultOutput();
+void buttonFunct(char index);
+void draw();
 
 void init_SDL();
 void close_SDL();
