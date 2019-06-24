@@ -13,10 +13,6 @@ pair<short, short> elementsSizes[short(Element::COUNT)];
 string imgPaths[short(Images::COUNT)];
 
 
-void error(string str)
-{
-	throw runtime_error(str);
-}
 
 wstring transform_str(string str)
 {
@@ -36,6 +32,46 @@ void text_transform(wstring str, Uint16* new_str)
 	{
 		new_str[i] = str[i];
 	}
+}
+
+//Возвращает количество символов в числе
+short digitNumber(short val)
+{
+	short count = 0;
+	while(val>0)
+	{
+		count++;
+		val /= 10;
+	}
+	return count;
+}
+
+string tol(double val)
+{
+	int value = int(val);
+	while (val != int(val))
+	{
+		val *= 10;
+	}
+	short size1 = digitNumber(value);
+	short size2 = digitNumber(val);
+	char* str = new char[size1>size2?size1:size2];
+	string result = string{ itoa(value, str, size1) } +'.' + string{itoa(value,str,size2)};
+	delete[] str;
+	return result;
+}
+
+//Перевод числа в строку
+string digit_transform(double val)
+{
+	char* str = new char[digitNumber(val)+1];
+	string str2;
+
+	sprintf(str, "%lf", val);
+	str2 = str;
+	delete[] str;
+
+	return str2;
 }
 
 Texture::Texture()
@@ -158,7 +194,7 @@ void Texture::loadFromText(string text, TTF_Font* font, SDL_Color color, int x, 
 void Texture::loadTexture()
 {
 	free();
-	mTexture = SDL_CreateTextureFromSurface(gRender, mSurface);
+	mTexture = SDL_CreateTextureFromSurface(gRenderer, mSurface);
 	if (mTexture == nullptr)
 	{
 		error("loadTexute failed: " + string(SDL_GetError()));
@@ -170,5 +206,5 @@ void Texture::loadTexture()
 void Texture::render(int x, int y)
 {
 	SDL_Rect renderQuad = { x,y,mWidth,mHeight };
-	SDL_RenderCopy(gRender, mTexture, NULL, &renderQuad);
+	SDL_RenderCopy(gRenderer, mTexture, NULL, &renderQuad);
 }
