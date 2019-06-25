@@ -1,19 +1,23 @@
 ﻿#include "Token.h"
 string strExpression = "";
 short index = 0;
-
+bool invalidSym=false;
+string invalidSym_mess="";
 
 double parseToDouble()
 {
+	cout << "parseToDouble: " << endl;
 	string val = "";
 	bool dot = false;
-	while (isdigit(strExpression[index]) || (!dot && strExpression[index] == '.'))
+	cout << strExpression[index] << endl;
+	while (isdigit(strExpression[index]) || (!dot && strExpression[index] == ','))
 	{
-		if (strExpression[index] == '.')
+		if (strExpression[index] == ',')
 			dot = true;
 
 		val += strExpression[index];
 		index++;
+		cout << val << endl;
 	}
 	return atof(val.c_str());
 }
@@ -26,8 +30,17 @@ char getNextSymbol()
 
 void backspaceFunct()
 {
-	strExpression.pop_back();
-	index--;
+	if (strExpression.size() > 0)
+	{
+		if (strExpression.size() - 1 == index)
+			index--;
+		strExpression.pop_back();
+	}
+}
+
+void clearIndex()
+{
+	index = 0;
 }
 
 void clearFunct()
@@ -50,27 +63,21 @@ Token Token_stream::get()
 		return buffer;
 	}
 	char ch = getNextSymbol();
+	double val=0;
 	switch (ch)
 	{
-		/*case backspace:
-			backspaceFunct();
-			break;
-		case clear:
-			clearFunct();
-			break;*/
 		case'=':
 		case'(': case')': case'+':
 		case'-': case'*': case'/':
 		case'√': case'^': case'!':
-		//case pi: case prefSign:
 			return Token{ ch };
-			//case'.':
 		case'0': case'1': case'2': case'3': case'4':
 		case'5': case'6': case'7': case'8': case'9':
-			double val = parseToDouble();
+			index--;
+			val = parseToDouble();
 			return Token{ digit,val };
 		default:
-			invalidSymbol();
+			invalidSymbol("Invalid Symbol");
 			break;
 	}
 }

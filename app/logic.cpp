@@ -27,24 +27,31 @@ double primary()
 			double d = expression();
 			t = ts.get();
 			if (t.kind != ')')
-				error("Требуется ')'");
-				//invalidSymbol();
+			{
+				invalidSymbol("Требуется ')'");
+				return 0;
+			}
 			return d;
 		}
 	case digit:
+		cout << "Получено число: " << t.value << endl;
 		return t.value;
 	case '-':
 		return -primary();
 	case '+':
 		return primary();
 	default:
-		error("Отстутствует первичное выражение");
+		invalidSymbol("Отстутствует первичное выражение");
+		return 0;
+		//error("Отстутствует первичное выражение");
 	}
 }
 
 double half_term()
 {
 	double left = primary();
+	if (invalidSym)
+		return 0;
 	Token t = ts.get();
 	while(true)
 	{
@@ -59,7 +66,7 @@ double half_term()
 			t = ts.get();
 			break;
 		case '!':
-			factorial(left);
+			left = factorial(left);
 			t = ts.get();
 			break;
 		default:
@@ -72,6 +79,8 @@ double half_term()
 double term()
 {
 	double left = half_term();
+	if (invalidSym)
+		return 0;
 	Token t = ts.get();
 	while (true) 
 	{
@@ -91,7 +100,15 @@ double term()
 			t = ts.get();
 			break;
 		}
-
+		case '%':
+		{
+			double d = half_term();
+			if (d == 0)
+				error("Деление на нуль");
+			left = int(left) % int(d);
+			t = ts.get();
+			break;
+		}
 		default:
 			ts.putback(t);
 			return left;
@@ -102,6 +119,8 @@ double term()
 double expression()
 {
 	double left = term();
+	if (invalidSym)
+		return 0;
 	Token t = ts.get();
 	while (true)
 	{

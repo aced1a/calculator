@@ -55,18 +55,63 @@ void Screen::screenRender()
 	resultOutput.render(0, 0);
 }
 
-void buttonFunct(char index)
+void buttonFunct(char symbol)
 {
-	if (index == backspace)
+	if (symbol == backspace)
 		backspaceFunct();
-	else if (index == clear)
+	else if (symbol == clear)
 		clearFunct();
-	else if (index == pi)
-		strExpression += "3.14";
-	else if (index == prefSign)
-		strExpression += '-';
-	else
-		strExpression += index;
+	else if (symbol == '=')
+	{
+		strExpression += symbol;
+		strExpression = tol(expression());
+		clearIndex();
+	}
+	else 
+		strExpression += symbol;
 	loadMedia_resultOutput();
 	draw();
+}
+
+bool inSquare(Button* button, int& x, int& y)
+{
+	if (x > button->getX() && y > button->getY() && x < (button->getX() + button->mTexture.getWidth()) && y < (button->getY() + button->mTexture.getHeight()))
+		return true;
+	return false;
+}
+
+void whichButtonDown(int& x, int& y)
+{
+	for (short i = 0; i <screen.mButtons.size(); i++)
+	{
+		if (inSquare(&screen.mButtons[i], x, y))
+		{
+			screen.mButtons[i].buttonFunction(screen.mButtons[i].getIndex());
+		}
+	}
+}
+
+void eventControll()
+{
+	int x = 0, y = 0;
+	SDL_Event e;
+	bool running = true;
+	while(running)
+	{
+		if (SDL_PollEvent(&e)) 
+		{
+			switch (e.type)
+			{
+			case SDL_QUIT:
+				running = false;
+				break;
+			case SDL_MOUSEBUTTONDOWN:
+				SDL_GetMouseState(&x, &y);
+				whichButtonDown(x, y);
+				break;
+			default:
+				break;
+			}
+		}
+	}
 }

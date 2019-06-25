@@ -1,12 +1,20 @@
 #include "Button.h"
 
+void invalidSymbol(string str)
+{
+	invalidSym = true;
+	invalidSym_mess = str;
+}
+
 void loadMedia_screenButtons()
 {
 	for (short i = 0; i < screen.mButtons.size(); i++)
 	{
 		screen.mButtons[i].mTexture.createSurface(screen.mButtons[i].getElement(), true, SDL_Color{ 195,195,195 });
-		if (screen.mButtons[i].getIndex() != 0 || screen.mButtons[i].getIndex() != 1 || screen.mButtons[i].getIndex() != 2)
-			screen.mButtons[i].mTexture.loadFromText(string{ screen.mButtons[i].getIndex() }, gFont_small, gFontColor, 5, 5);
+		//if (screen.mButtons[i].getIndex() != 0 && screen.mButtons[i].getIndex() != 1 && screen.mButtons[i].getIndex() != 2)
+		//if(i!=3 && i!=5 && i!=20)
+		if(i!=5)
+			screen.mButtons[i].mTexture.loadFromText(string{ screen.mButtons[i].getIndex() }, gFont_big, gFontColor, 5, 5);
 		else{
 			screen.mButtons[i].mTexture.addImage(imgPaths[screen.mButtons[i].getIndex()],0,0);
 		}
@@ -22,21 +30,39 @@ void loadMedia_background()
 
 void loadMedia_resultOutput()
 {
-	string first = strExpression, second = tol(expression());
-	short offset = MAINWINDOW_WIDTH - (strExpression.size() * 10)-20,offset2=MAINWINDOW_WIDTH - 20;
-	if (offset < 20)
+	string first;
+	first = strExpression;
+	if (invalidSym)
 	{
-		//offset = 20;
-		while (offset < 20)
+		invalidSym = false;
+		first = invalidSym_mess;
+		clearFunct();
+	}
+	short offset = MAINWINDOW_WIDTH - (strExpression.size() * 25);
+	if (offset < 25)
+	{
+		while (offset < 25)
 		{
-			offset += 10;
+			offset += 25;
 			first.erase(first.begin());
 		}
-		offset -= second.size() * 10;
 	}
 	screen.resultOutput.createSurface(Element::resultOutput);
-	screen.mBackground.loadFromText(first, gFont_small, gFontColor, offset, 30);
-	screen.mBackground.loadFromText(second, gFont_small, gFontColor, 20, 20);
+	screen.resultOutput.loadFromText(first, gFont_big, gFontColor, offset, 30);
+	screen.resultOutput.loadTexture();
+}
+
+void firsLoadMedia()
+{
+	loadMedia_background();
+	loadMedia_screenButtons();
+	loadMedia_resultOutput();
+}
+
+void setViewport()
+{
+	SDL_Rect topLeft{ 0,0,MAINWINDOW_WIDTH,200 };
+	
 }
 
 void draw()

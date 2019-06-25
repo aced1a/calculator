@@ -5,7 +5,7 @@ SDL_Window* gWindow=nullptr;
 
 TTF_Font* gFont_small = nullptr;
 TTF_Font* gFont_big   = nullptr;
-SDL_Color gFontColor = {0xFF,0xFF,0xFF};
+SDL_Color gFontColor = {0,0,0};
 
 const string fontPath = "C:/SDL/projects/engDataBase/engDataBase/Fonts/fixedsys.ttf";;
 
@@ -38,27 +38,24 @@ void text_transform(wstring str, Uint16* new_str)
 short digitNumber(short val)
 {
 	short count = 0;
-	while(val>0)
+	do
 	{
 		count++;
 		val /= 10;
-	}
+	} while (val > 0);
 	return count;
 }
 
 string tol(double val)
 {
-	int value = int(val);
-	while (val != int(val))
+	string str = to_string(val);
+	while (str[str.size()-1] == '0')
 	{
-		val *= 10;
+		str.pop_back();
 	}
-	short size1 = digitNumber(value);
-	short size2 = digitNumber(val);
-	char* str = new char[size1>size2?size1:size2];
-	string result = string{ itoa(value, str, size1) } +'.' + string{itoa(value,str,size2)};
-	delete[] str;
-	return result;
+	if (str[str.size() - 1] == ',')
+		str.pop_back();
+	return str;
 }
 
 //Перевод числа в строку
@@ -156,7 +153,7 @@ void Texture::addImage(string path, int x, int y)
 	SDL_Surface* loadedImage = IMG_Load(path.c_str());
 	if (loadedImage == nullptr)
 	{
-		error("loadImage: LoadBMP error: " + string(SDL_GetError()));
+		error("loadImage: LoadBMP error: " + string(IMG_GetError()));
 	}
 	SDL_Rect rect = { NULL,NULL,loadedImage->w,loadedImage->h };
 	SDL_Rect desc = { x,y,NULL,NULL };

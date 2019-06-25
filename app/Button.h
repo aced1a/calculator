@@ -35,7 +35,9 @@ public:
 extern Screen screen;
 void loadMedia_resultOutput();
 void buttonFunct(char index);
+void firsLoadMedia();
 void draw();
-
+void eventControll();
 void init_SDL();
 void close_SDL();
+void init_elements();

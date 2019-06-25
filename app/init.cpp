@@ -3,7 +3,7 @@
 void init_fonts()
 {
 	gFont_small = TTF_OpenFont(fontPath.c_str(), 14);
-	gFont_big = TTF_OpenFont(fontPath.c_str(), 24);
+	gFont_big = TTF_OpenFont(fontPath.c_str(), 48);
 	if (gFont_small == nullptr || gFont_big==nullptr)
 	{
 		error("TTF_OpenFont failed: " + string(TTF_GetError()));
@@ -54,15 +54,15 @@ void close_SDL()
 void init_elementsSizes()
 {
 	elementsSizes[short(Element::background)] = { MAINWINDOW_WIDTH,MAINWINDOW_HEIGHT };
-	elementsSizes[short(Element::resultOutput)] = {0,0};
-	elementsSizes[short(Element::button)] = { 20,20 };
+	elementsSizes[short(Element::resultOutput)] = {MAINWINDOW_WIDTH,200};
+	elementsSizes[short(Element::button)] = { 97,70 };
 }
 
 void init_imgPaths()
 {
-	imgPaths[short(Images::piImg)] = " ";
-	imgPaths[short(Images::prefixCharacter)] = "";
-	imgPaths[short(Images::backspaceImg)] = "";
+	imgPaths[short(Images::piImg)] = "img/pi.png";
+	imgPaths[short(Images::prefixCharacter)] = "img/+-.png";
+	imgPaths[short(Images::backspaceImg)] = "img/backspace.png";
 }
 
 void init_screen()
@@ -70,8 +70,15 @@ void init_screen()
 	short w = elementsSizes[short(Element::button)].first;
 	short h = elementsSizes[short(Element::button)].second;
 	short size = 24;
-	char symbols[] = { '%','√','^',char(0),'c',char(1),'!','/','7','8','9','*','4','5','6','-','1','2','3','+',char(2),'0','.','=' };//'π'
+	char symbols[] = { '%','√','(',')','c',char(2),'^','/','7','8','9','*','4','5','6','-','1','2','3','+','!'/*char(1)*/,'0',',','=' };//'π'
 	for (short i = 0; i < size; i++) {
-		screen.mButtons.push_back(Button{ w*(i / 4) + 2,h*(i % 4) + 2,symbols[i],Element::button,buttonFunct });
+		screen.mButtons.push_back(Button{w*(i % 4)+(i%4)*4,150+h*(i / 4)+(i/4)*2,symbols[i],Element::button,buttonFunct });
 	}
+}
+
+void init_elements()
+{
+	init_elementsSizes();
+	init_imgPaths();
+	init_screen();
 }
