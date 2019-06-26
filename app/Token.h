@@ -9,8 +9,9 @@
 using namespace std;
 
 #define digit '0'
+#define sqrtSym 's'
 #define clear 'c'
-#define backspace 2
+#define backspace '<'
 
 class Token
 {
@@ -33,6 +34,7 @@ public:
 	void putback(Token t);
 };
 
+extern short index;
 extern bool invalidSym;
 extern string invalidSym_mess;
 extern string strExpression;

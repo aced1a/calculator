@@ -1,7 +1,8 @@
-#include "Button.h"
+﻿#include "Button.h"
 
 void invalidSymbol(string str)
 {
+	cout << str << endl;
 	invalidSym = true;
 	invalidSym_mess = str;
 }
@@ -11,13 +12,12 @@ void loadMedia_screenButtons()
 	for (short i = 0; i < screen.mButtons.size(); i++)
 	{
 		screen.mButtons[i].mTexture.createSurface(screen.mButtons[i].getElement(), true, SDL_Color{ 195,195,195 });
-		//if (screen.mButtons[i].getIndex() != 0 && screen.mButtons[i].getIndex() != 1 && screen.mButtons[i].getIndex() != 2)
-		//if(i!=3 && i!=5 && i!=20)
-		if(i!=5)
+
+		if(i!=1)
 			screen.mButtons[i].mTexture.loadFromText(string{ screen.mButtons[i].getIndex() }, gFont_big, gFontColor, 5, 5);
-		else{
-			screen.mButtons[i].mTexture.addImage(imgPaths[screen.mButtons[i].getIndex()],0,0);
-		}
+		else
+			screen.mButtons[i].mTexture.loadFromText("sqrt", gFont_big, gFontColor, 2, 5);
+		
 		screen.mButtons[i].mTexture.loadTexture();
 	}
 }
@@ -36,9 +36,8 @@ void loadMedia_resultOutput()
 	{
 		invalidSym = false;
 		first = invalidSym_mess;
-		clearFunct();
 	}
-	short offset = MAINWINDOW_WIDTH - (strExpression.size() * 25);
+	short offset = MAINWINDOW_WIDTH - (first.size() * 25);
 	if (offset < 25)
 	{
 		while (offset < 25)

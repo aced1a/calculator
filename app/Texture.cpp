@@ -7,11 +7,9 @@ TTF_Font* gFont_small = nullptr;
 TTF_Font* gFont_big   = nullptr;
 SDL_Color gFontColor = {0,0,0};
 
-const string fontPath = "C:/SDL/projects/engDataBase/engDataBase/Fonts/fixedsys.ttf";;
+const string fontPath = "Fonts/fixedsys.ttf";;
 
 pair<short, short> elementsSizes[short(Element::COUNT)];
-string imgPaths[short(Images::COUNT)];
-
 
 
 wstring transform_str(string str)

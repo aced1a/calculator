@@ -25,22 +25,29 @@ double primary()
 	case'(':
 		{
 			double d = expression();
+			if (invalidSym) return 0;
 			t = ts.get();
 			if (t.kind != ')')
 			{
 				invalidSymbol("Требуется ')'");
-				return 0;
+				{
+					ts.putback(t);
+					return 0; 
+				}
 			}
 			return d;
 		}
 	case digit:
-		cout << "Получено число: " << t.value << endl;
 		return t.value;
 	case '-':
 		return -primary();
 	case '+':
 		return primary();
+	case sqrtSym:
+		ts.putback(t);
+		return 0;
 	default:
+		ts.putback(t);
 		invalidSymbol("Отстутствует первичное выражение");
 		return 0;
 		//error("Отстутствует первичное выражение");
@@ -57,7 +64,8 @@ double half_term()
 	{
 		switch (t.kind)
 		{
-		case '√':
+		case sqrtSym:
+			index += 3;
 			left = sqrt(primary());
 			t = ts.get();
 			break;
@@ -137,6 +145,7 @@ double expression()
 		case '=':
 			return left;
 		default:
+			ts.putback(t);
 			return left;
 		}
 	}

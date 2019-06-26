@@ -6,10 +6,8 @@ string invalidSym_mess="";
 
 double parseToDouble()
 {
-	cout << "parseToDouble: " << endl;
 	string val = "";
 	bool dot = false;
-	cout << strExpression[index] << endl;
 	while (isdigit(strExpression[index]) || (!dot && strExpression[index] == ','))
 	{
 		if (strExpression[index] == ',')
@@ -17,7 +15,6 @@ double parseToDouble()
 
 		val += strExpression[index];
 		index++;
-		cout << val << endl;
 	}
 	return atof(val.c_str());
 }
@@ -69,7 +66,8 @@ Token Token_stream::get()
 		case'=':
 		case'(': case')': case'+':
 		case'-': case'*': case'/':
-		case'√': case'^': case'!':
+		case'%': case'^': case'!':
+		case sqrtSym:
 			return Token{ ch };
 		case'0': case'1': case'2': case'3': case'4':
 		case'5': case'6': case'7': case'8': case'9':
@@ -77,6 +75,7 @@ Token Token_stream::get()
 			val = parseToDouble();
 			return Token{ digit,val };
 		default:
+			cout << "Invalid symbol - " << ch << endl;
 			invalidSymbol("Invalid Symbol");
 			break;
 	}

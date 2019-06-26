@@ -1,4 +1,4 @@
-#include "Button.h"
+﻿#include "Button.h"
 
 Screen screen;
 
@@ -61,6 +61,8 @@ void buttonFunct(char symbol)
 		backspaceFunct();
 	else if (symbol == clear)
 		clearFunct();
+	else if (symbol == sqrtSym)
+		strExpression += "sqrt";
 	else if (symbol == '=')
 	{
 		strExpression += symbol;

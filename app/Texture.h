@@ -14,10 +14,7 @@ extern TTF_Font* gFont_big;
 extern const string fontPath;
 
 enum class Element { background=0,resultOutput,button,COUNT };
-enum class Images{piImg=0,prefixCharacter,backspaceImg,COUNT};
-
 extern pair<short,short> elementsSizes[short(Element::COUNT)];
-extern string imgPaths[short(Images::COUNT)];
 
 
 class Texture
