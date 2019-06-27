@@ -4,6 +4,7 @@ short index = 0;
 bool invalidSym=false;
 string invalidSym_mess="";
 
+//Парсинг строки в число
 double parseToDouble()
 {
 	string val = "";
@@ -29,8 +30,6 @@ void backspaceFunct()
 {
 	if (strExpression.size() > 0)
 	{
-		if (strExpression.size() - 1 == index)
-			index--;
 		strExpression.pop_back();
 	}
 }
@@ -44,6 +43,11 @@ void clearFunct()
 {
 	strExpression = "";
 	index = 0;
+}
+
+void Token_stream::clearBuffer()
+{
+	full = false;
 }
 
 void Token_stream::putback(Token t)
@@ -75,7 +79,6 @@ Token Token_stream::get()
 			val = parseToDouble();
 			return Token{ digit,val };
 		default:
-			cout << "Invalid symbol - " << ch << endl;
 			invalidSymbol("Invalid Symbol");
 			break;
 	}

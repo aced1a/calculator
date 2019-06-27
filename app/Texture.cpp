@@ -3,14 +3,12 @@
 SDL_Renderer* gRenderer=nullptr;
 SDL_Window* gWindow=nullptr;
 
-TTF_Font* gFont_small = nullptr;
 TTF_Font* gFont_big   = nullptr;
 SDL_Color gFontColor = {0,0,0};
 
 const string fontPath = "Fonts/fixedsys.ttf";;
 
 pair<short, short> elementsSizes[short(Element::COUNT)];
-
 
 wstring transform_str(string str)
 {
@@ -33,16 +31,16 @@ void text_transform(wstring str, Uint16* new_str)
 }
 
 //Возвращает количество символов в числе
-short digitNumber(short val)
-{
-	short count = 0;
-	do
-	{
-		count++;
-		val /= 10;
-	} while (val > 0);
-	return count;
-}
+//short digitNumber(short val)
+//{
+//	short count = 0;
+//	do
+//	{
+//		count++;
+//		val /= 10;
+//	} while (val > 0);
+//	return count;
+//}
 
 string tol(double val)
 {
@@ -56,18 +54,6 @@ string tol(double val)
 	return str;
 }
 
-//Перевод числа в строку
-string digit_transform(double val)
-{
-	char* str = new char[digitNumber(val)+1];
-	string str2;
-
-	sprintf(str, "%lf", val);
-	str2 = str;
-	delete[] str;
-
-	return str2;
-}
 
 Texture::Texture()
 {
@@ -128,21 +114,6 @@ void Texture::createSurface(Element element,bool fill,SDL_Color color)
 		SDL_Rect rect = { 0,0,mWidth,mHeight };
 		SDL_FillRect(mSurface, &rect, SDL_MapRGB(mSurface->format, color.r, color.g, color.b));
 	}
-}
-
-//Загрузка изображения на поверхность mSurface
-void Texture::loadImage(string path)
-{
-	surfaceFree();
-
-	mSurface = IMG_Load(path.c_str());
-	if (mSurface == nullptr)
-	{
-		error("loadImage: IMG_Load error: " + string(IMG_GetError()));
-	}
-
-	mWidth = mSurface->w;
-	mHeight = mSurface->h;
 }
 
 

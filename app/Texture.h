@@ -9,7 +9,6 @@ extern SDL_Window* gWindow;
 
 extern SDL_Color gFontColor;
 
-extern TTF_Font* gFont_small;
 extern TTF_Font* gFont_big;
 extern const string fontPath;
 
@@ -24,8 +23,7 @@ public:
 	~Texture();
 	void free();																						
 	void surfaceFree();																					
-	void createSurface(Element element, bool fill = false, SDL_Color color = { 0,0,0 });
-	void loadImage(string path);					
+	void createSurface(Element element, bool fill = false, SDL_Color color = { 0,0,0 });					
 	void addImage(string path, int x, int y);	
 	void loadFromText(string text, TTF_Font* font, SDL_Color color, int x, int y);						
 	void loadTexture();																					
@@ -44,5 +42,4 @@ private:
 
 void text_transform(wstring text, Uint16* unicode);
 wstring transform_str(string text);
-string digit_transform(double val);
-string tol(double val);
+//string digit_transform(double val);

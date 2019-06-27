@@ -1,6 +1,13 @@
 ﻿#include "Token.h"
 
 Token_stream ts;
+double expression();
+
+void invalidSymbol(string str)
+{
+	invalidSym = true;
+	invalidSym_mess = str;
+}
 
 void error(string str)
 {
@@ -22,6 +29,17 @@ double primary()
 	Token t = ts.get();
 	switch (t.kind)
 	{
+	case sqrtSym:
+	{
+		index += 3;
+		double p = primary();
+		if (p < 0)
+		{
+			invalidSymbol("Попытка вычисления отицательного корня");
+			return 0;
+		}
+		return sqrt(p); 
+	}
 	case'(':
 		{
 			double d = expression();
@@ -43,14 +61,10 @@ double primary()
 		return -primary();
 	case '+':
 		return primary();
-	case sqrtSym:
-		ts.putback(t);
-		return 0;
 	default:
-		ts.putback(t);
+		//ts.putback(t);
 		invalidSymbol("Отстутствует первичное выражение");
 		return 0;
-		//error("Отстутствует первичное выражение");
 	}
 }
 
@@ -64,11 +78,6 @@ double half_term()
 	{
 		switch (t.kind)
 		{
-		case sqrtSym:
-			index += 3;
-			left = sqrt(primary());
-			t = ts.get();
-			break;
 		case '^':
 			left = pow(left, primary());
 			t = ts.get();
@@ -103,7 +112,10 @@ double term()
 		{
 			double d = half_term();
 			if (d == 0)
-				error("Деление на нуль");
+			{
+				invalidSymbol("Деление на нуль");
+				return 0;
+			}
 			left /= d;
 			t = ts.get();
 			break;
@@ -112,7 +124,10 @@ double term()
 		{
 			double d = half_term();
 			if (d == 0)
-				error("Деление на нуль");
+			{
+				invalidSymbol("Деление на нуль");
+				return 0;
+			}
 			left = int(left) % int(d);
 			t = ts.get();
 			break;
@@ -149,4 +164,19 @@ double expression()
 			return left;
 		}
 	}
+}
+
+string calculate()
+{
+	string strResult;
+	double result = expression();
+	if (index != strExpression.size())
+	{
+		invalidSymbol("Неправильное выражение");
+	}
+	clearIndex();
+	ts.clearBuffer();
+	if (invalidSym)
+		return invalidSym_mess;
+	return tol(result);
 }

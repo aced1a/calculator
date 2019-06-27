@@ -2,9 +2,8 @@
 
 void init_fonts()
 {
-	gFont_small = TTF_OpenFont(fontPath.c_str(), 14);
 	gFont_big = TTF_OpenFont(fontPath.c_str(), 48);
-	if (gFont_small == nullptr || gFont_big==nullptr)
+	if (gFont_big==nullptr)
 	{
 		error("TTF_OpenFont failed: " + string(TTF_GetError()));
 	}
@@ -42,7 +41,6 @@ void init_SDL()
 
 void close_SDL()
 {
-	TTF_CloseFont(gFont_small);
 	TTF_CloseFont(gFont_big);
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
@@ -63,7 +61,7 @@ void init_screen()
 	short w = elementsSizes[short(Element::button)].first;
 	short h = elementsSizes[short(Element::button)].second;
 	short size = 24;
-	char symbols[] = { '%',sqrtSym,'(',')','c','<','^','/','7','8','9','*','4','5','6','-','1','2','3','+','!'/*char(1)*/,'0',',','=' };//'π'
+	char symbols[] = { '%',sqrtSym,'(',')',clear,backspace,'^','/','7','8','9','*','4','5','6','-','1','2','3','+','!','0',',','=' };
 	for (short i = 0; i < size; i++) {
 		screen.mButtons.push_back(Button{w*(i % 4)+(i%4)*4,150+h*(i / 4)+(i/4)*2,symbols[i],Element::button,buttonFunct });
 	}

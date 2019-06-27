@@ -1,11 +1,6 @@
 ﻿#include "Button.h"
 
-void invalidSymbol(string str)
-{
-	cout << str << endl;
-	invalidSym = true;
-	invalidSym_mess = str;
-}
+
 
 void loadMedia_screenButtons()
 {

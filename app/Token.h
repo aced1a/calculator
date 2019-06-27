@@ -8,42 +8,50 @@
 #include <SDL_image.h>
 using namespace std;
 
-#define digit '0'
+
+#define digit '0'		
 #define sqrtSym 's'
 #define clear 'c'
 #define backspace '<'
 
-class Token
+//Лексемы
+class Token		
 {
 public:
-	char kind;
-	double value;
+	char kind;     //Тип лексемы
+	double value;	//Значение лексемы, если тип == число
 
 	Token():kind{' '},value{0}{}
 	Token(char ch) :kind{ ch }, value{ 0 }{}
 	Token(char ch, double val) :kind{ ch }, value{ val }{}
 };
 
+//Поток лексем
 class Token_stream
 {
-	bool full{ false };
-	Token buffer;
+	bool full{ false };							//Буффер полный?
+	Token buffer;								//Хранит возвращенную лексему
 public:
 	Token_stream():full{false},buffer{}{}
-	Token get();
-	void putback(Token t);
+	void clearBuffer();
+	Token get();								//Получение следующей лексемы
+	void putback(Token t);						//Возврат лексемы и ее сохранение в буффер
 };
 
-extern short index;
-extern bool invalidSym;
-extern string invalidSym_mess;
-extern string strExpression;
-char getNextSymbol();
-void invalidSymbol(string str);
-void backspaceFunct();
+
+extern short index;		//индекс обрабатываемого символа из строки 
+extern bool invalidSym;	//Была ошибка в записи выражения
+extern string invalidSym_mess;	//сообщение с ошибкой
+
+extern string strExpression; //строка хранящая выражение
+
+string tol(double val);	//перевод числа в строку
+char getNextSymbol();	//получения нового символа из строки
+void invalidSymbol(string str);	//вызывается при ошибке в выражении
+void backspaceFunct();	
 void clearFunct();
 void clearIndex();
 
-double expression();
+string calculate();	//старт подсчета выражения
 
-void error(string str);
+void error(string str);	//вызывается при критической ошибке ( генерирует исключение )

@@ -3,7 +3,7 @@
 Screen screen;
 
 Button::Button()
-	:x{ 0 }, y{ 0 }, index{ 0 }, active{ 0 }, element{  }
+	:x{ 0 }, y{ 0 }, index{ 0 }, element{ Element::COUNT }
 {
 	buttonFunction = nullptr;
 }
@@ -35,15 +35,15 @@ Element Button::getElement()
 }
 
 
-void Button::setIndex(short i)
-{
-	index = i;
-}
-
-void Button::chgElement(Element e)
-{
-	element = e;
-}
+//void Button::setIndex(short i)
+//{
+//	index = i;
+//}
+//
+//void Button::chgElement(Element e)
+//{
+//	element = e;
+//}
 
 void Screen::screenRender()
 {
@@ -66,8 +66,7 @@ void buttonFunct(char symbol)
 	else if (symbol == '=')
 	{
 		strExpression += symbol;
-		strExpression = tol(expression());
-		clearIndex();
+		strExpression = calculate();
 	}
 	else 
 		strExpression += symbol;

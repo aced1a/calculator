@@ -5,19 +5,17 @@ class Button
 {
 	int x, y;		
 	char index;	
-	//Uint16 index;
-	bool active;	
 	Element element;	
 public:
 	Button();
 	Button(int xx, int yy, char i, Element e, void(*f)(char));
 	char getIndex();
-	void setIndex(short i);
+	//void setIndex(short i);
 	int getX();
 	int getY();
 	void(*buttonFunction)(char);	
 	Element getElement();	
-	void chgElement(Element e);
+	/*void chgElement(Element e);*/
 
 	Texture mTexture;
 };
