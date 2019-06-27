@@ -24,7 +24,7 @@ void init_SDL()
 		error("IMG_Init failed: " + string(IMG_GetError()));
 	}
 
-	gWindow = SDL_CreateWindow("Calendar", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, MAINWINDOW_WIDTH, MAINWINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+	gWindow = SDL_CreateWindow("Calculator", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, MAINWINDOW_WIDTH, MAINWINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 	if (gWindow == nullptr)
 	{
 		error("SDL_CreateWindow failed: " + string(SDL_GetError()));
